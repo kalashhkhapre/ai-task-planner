@@ -1,10 +1,16 @@
+import json
+
 from app.services.llm_service import LLMService
 from app.rag.retriever import retrieve_context
+
 
 class TaskDecomposer:
 
     @staticmethod
-    def decompose(goal: str):
+    def run(state):
+
+        goal = state["refined_goal"]
+
         context = retrieve_context(goal)
 
         prompt = f"""
@@ -24,6 +30,8 @@ class TaskDecomposer:
         - Do NOT add explanations.
         - Each task should be concise.
         - Each task should be a string.
+        - Do NOT use markdown.
+        - Do NOT use triple backticks.
 
         Format:
         [
@@ -33,7 +41,10 @@ class TaskDecomposer:
         ]
         """
 
-
         response = LLMService.generate(prompt)
 
-        return response
+        tasks = json.loads(response) # type: ignore
+
+        return {
+            "tasks": tasks
+        }

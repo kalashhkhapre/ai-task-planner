@@ -1,10 +1,14 @@
+import json
+
 from app.services.llm_service import LLMService
 
 
 class DependencyAnalyzer:
 
     @staticmethod
-    def analyze(tasks):
+    def run(state):
+
+        tasks = state["tasks"]
 
         tasks_text = "\n".join(
             [f"{i+1}. {task}" for i, task in enumerate(tasks)]
@@ -25,6 +29,7 @@ class DependencyAnalyzer:
         - Return ONLY valid JSON.
         - No explanations.
         - No markdown.
+        - Do NOT use triple backticks.
 
         Tasks:
         {tasks_text}
@@ -40,4 +45,8 @@ class DependencyAnalyzer:
 
         response = LLMService.generate(prompt)
 
-        return response
+        dependencies = json.loads(response) # type: ignore
+
+        return {
+            "dependencies": dependencies
+        }

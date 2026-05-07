@@ -12,6 +12,6 @@ def retrieve_context(query, top_k=3):
         n_results=top_k
     )
 
-    documents = results["documents"][0]
+    documents = results["documents"][0] # type: ignore
 
     return "\n".join(documents)

@@ -8,22 +8,39 @@ KNOWLEDGE_PATH = "app/rag/knowledge"
 
 documents = []
 ids = []
+metadatas = []
 
-for idx, filename in enumerate(os.listdir(KNOWLEDGE_PATH)):
+chunk_id = 0
+
+for filename in os.listdir(KNOWLEDGE_PATH):
+
     path = os.path.join(KNOWLEDGE_PATH, filename)
 
     with open(path, "r", encoding="utf-8") as file:
+
         text = file.read()
 
-        documents.append(text)
-        ids.append(str(idx))
+        chunks = text.split("\n\n")
+
+        for chunk in chunks:
+
+            documents.append(chunk)
+
+            ids.append(str(chunk_id))
+
+            metadatas.append({
+                "source": filename
+            })
+
+            chunk_id += 1
 
 embeddings = model.encode(documents).tolist()
 
 collection.add(
     documents=documents,
     embeddings=embeddings,
-    ids=ids
+    ids=ids,
+    metadatas=metadatas
 )
 
-print("Knowledge ingested successfully")
+print("Chunked knowledge ingestion completed")
