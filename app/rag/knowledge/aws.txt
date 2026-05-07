@@ -1,0 +1,10 @@
+AWS deployment workflow:
+
+1. Setup IAM roles
+2. Create VPC
+3. Setup EC2/ECS
+4. Configure RDS
+5. Setup Load Balancer
+6. Configure Auto Scaling
+7. Setup Monitoring with CloudWatch
+8. Configure CI/CD pipeline

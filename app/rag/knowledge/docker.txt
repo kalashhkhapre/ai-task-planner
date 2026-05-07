@@ -1,0 +1,9 @@
+Docker application workflow:
+
+1. Create Dockerfile
+2. Build Docker image
+3. Configure docker-compose
+4. Setup environment variables
+5. Test containers locally
+6. Push image to registry
+7. Deploy containers

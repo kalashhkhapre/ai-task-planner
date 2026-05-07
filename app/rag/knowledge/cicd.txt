@@ -1,0 +1,9 @@
+CI/CD best practices:
+
+1. Setup Git repository
+2. Configure GitHub Actions
+3. Add automated testing
+4. Configure build pipeline
+5. Setup deployment stages
+6. Add rollback strategy
+7. Monitor deployments
